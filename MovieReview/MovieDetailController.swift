@@ -14,6 +14,7 @@ class MovieDetailController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var reviewLabel: UILabel!
     @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var titleDetail: String?
     var reviewDetail: String?
@@ -25,6 +26,8 @@ class MovieDetailController: UIViewController {
         reviewLabel.text = reviewDetail
         let path = "https://image.tmdb.org/t/p/w342" + backgroudDetail!
         background.setImageWith(URL(string: path)!)
+        
+        scrollView.contentSize.height = 210
         // Do any additional setup after loading the view.
     }
 

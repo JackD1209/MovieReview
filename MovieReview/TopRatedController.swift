@@ -37,30 +37,42 @@ class TopRatedController: UIViewController, UITableViewDelegate, UITableViewData
         moviesList.tableHeaderView = searchController.searchBar
         
         
-        //        let refreshControl = UIRefreshControl()
-        //        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
-        //        moviesList.insertSubview(refreshControl, at: 0)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        moviesList.insertSubview(refreshControl, at: 0)
         // Do any additional setup after loading the view.
     }
     
-    //    func refreshControlAction(_ refreshControl: UIRefreshControl) {
-    //
-    //        // ... Create the URLRequest `myRequest` ...
-    //
-    //        // Configure session so that completion handler is executed on main UI thread
-    //        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-    //        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-    //
-    //            // ... Use the new data to update the data source ...
-    //
-    //            // Reload the tableView now that there is new data
-    //            myTableView.reloadData()
-    //
-    //            // Tell the refreshControl to stop spinning
-    //            refreshControl.endRefreshing()
-    //        }
-    //        task.resume()
-    //    }
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        
+        // ... Create the URLRequest `myRequest` ...
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
+        let request = URLRequest(url: url!, cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval:10)
+        
+        // Configure session so that completion handler is executed on main UI thread
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: OperationQueue.main)
+        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
+            
+            // ... Use the new data to update the data source ...
+            self.model.movies.removeAll()
+            if let data = dataOrNil {
+                if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options:[]) as? NSDictionary {
+                    let results = responseDictionary["results"] as? [NSDictionary]
+                    for i in results! {
+                        self.model.movies.append(Movie(title: i["title"] as! String, review: i["overview"] as! String, backgound: i["poster_path"] as! String))
+                    }
+                }
+            }
+            
+            // Reload the tableView now that there is new data
+            self.moviesList.reloadData()
+            
+            // Tell the refreshControl to stop spinning
+            refreshControl.endRefreshing()
+        })
+        task.resume()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
