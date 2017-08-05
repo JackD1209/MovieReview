@@ -27,6 +27,8 @@ class NowPlayingController: UIViewController, UITableViewDelegate, UITableViewDa
         model.delegate = self
         moviesList.delegate = self
         moviesList.dataSource = self
+        moviesList.estimatedRowHeight = 100
+        moviesList.rowHeight = UITableViewAutomaticDimension
 
         model.loadData("now_playing")
         moviesList.reloadData()

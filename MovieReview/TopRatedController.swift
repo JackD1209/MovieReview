@@ -27,6 +27,8 @@ class TopRatedController: UIViewController, UITableViewDelegate, UITableViewData
         model.delegate = self
         moviesList.delegate = self
         moviesList.dataSource = self
+        moviesList.estimatedRowHeight = 100
+        moviesList.rowHeight = UITableViewAutomaticDimension
         
         model.loadData("top_rated")
         moviesList.reloadData()
