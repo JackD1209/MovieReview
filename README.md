@@ -10,4 +10,4 @@
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://imgur.com/knCa57R' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/knCa57R.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
