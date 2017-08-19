@@ -1,10 +1,9 @@
-# Noter
+# MovieReview
 # iOS Project - SWIFT
 
 ## Description
 
-- [X] The app allows users to create or signin into firebase with email-authentication. After signin, users can create, edit or delete their note in real-time. 
-   
+- [X] The app will get json file from themoviewdb.org API then display it into 2 tab view. The users will be able to search for the movie they want to see the information about that movie.
 
 ## Video Walkthrough
 
